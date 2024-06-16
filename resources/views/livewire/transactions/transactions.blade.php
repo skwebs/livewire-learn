@@ -3,7 +3,7 @@
     <div class="mx-auto max-w-96 overflow-clip relative">
         <div class="bg-white h-dvh flex flex-col">
 
-            <div class="bg-blue-800 text-white flex justify-between">
+            <div class="bg-blue-800 text-white flex ">
 
                 <a class="flex justify-center items-center aspect-square bg-transparent h-full hover:bg-white/10 text-center "
                     href="{{ route('customers.list') }}" wire:navigate>
@@ -16,24 +16,20 @@
                         <x-icons.user-cirlce />
                     </a>
                     <div>
-                        <div class="text-xs">{{ $customer->name }}</div>
-                        <div class="text-xs">
-                            Contact : {{ $customer->contact }}
+                        <div class=" text-nowrap">{{ $customer->name }}</div>
+                        <div class="text-nowrap px-2 font-bold text-center">
+                            Bal: ₹
+                            {{-- {{ number_format($balance, 2) }} --}}
+                            <span @class([
+                                ' text-green-600' => $balance < 0,
+                                ' text-red-600' => $balance >= 0,
+                                'w-fit ms-1',
+                            ])>
+                                {{ number_format(abs($balance), 2) }} {{ $balance < 0 ? 'Cr' : 'Dr' }}
+                            </span>
                         </div>
                     </div>
-
-                    <div class="text-xl px-2 font-bold text-center">
-                        Bal: ₹ {{ number_format($balance, 2) }}
-                        <span @class([
-                            // ' text-green-600' => $balance >= 0,
-                            // ' text-red-600' => $balance < 0,
-                            'w-fit ms-1',
-                        ])>
-
-                            {{ $balance < 0 ? 'Dr' : 'Cr' }}
-                        </span>
-                    </div>
-
+                    <div></div>
                 </div>
 
             </div>
@@ -75,7 +71,7 @@
                                         'bg-red-50 text-red-600' => $transaction['balance'] >= 0,
                                         'w-fit px-2',
                                     ])>
-                                        {{ number_format($transaction['balance'], 2) }}
+                                        {{ number_format(abs($transaction['balance']), 2) }}
                                     </span>
                                 </div>
                             </div>
