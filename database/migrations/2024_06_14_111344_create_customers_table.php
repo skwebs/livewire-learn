@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable();
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('contact')->nullable();

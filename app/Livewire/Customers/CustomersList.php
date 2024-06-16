@@ -9,7 +9,7 @@ use Livewire\Component;
 class CustomersList extends Component
 {
     public $customers;
-    public $isOpen = true;
+    public $isOpen = false;
 
     // #[On('open-customer-modal')]
     public function openCustomerModal()
@@ -26,11 +26,13 @@ class CustomersList extends Component
 
     public function mount()
     {
-        $this->customers = Customer::all();
+        $this->customers = Customer::orderBy('id', 'desc')->get();
     }
 
+    #[On('render-customer-list')]
     public function render()
     {
+        $this->customers = Customer::orderBy('id', 'desc')->get();
         return view('livewire.customers.customers-list');
     }
 
@@ -39,15 +41,15 @@ class CustomersList extends Component
         $this->dispatch('open-create-customer');
     }
 
-    public function edit($id)
-    {
-        $this->dispatch('editCustomer', $id);
-    }
+    // public function edit($id)
+    // {
+    //     $this->dispatch('editCustomer', $id);
+    // }
 
-    public function delete(Customer $customer)
-    {
-        $customer->delete();
-        session()->flash('message', 'Customer Deleted Successfully.');
-        $this->dispatch('customer-deleted');
-    }
+    // public function delete(Customer $customer)
+    // {
+    //     $customer->delete();
+    //     session()->flash('message', 'Customer Deleted Successfully.');
+    //     $this->dispatch('customer-deleted');
+    // }
 }
