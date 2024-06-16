@@ -27,6 +27,6 @@ class DatabaseSeeder extends Seeder
         // Post::factory(10)->create();
         // Student::factory(50)->create();
         Customer::factory(5)->create();
-        Transaction::factory(500)->create();
+        // Transaction::factory(500)->create();
     }
 }

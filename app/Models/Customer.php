@@ -22,10 +22,15 @@ class Customer extends Model
 
     protected static function booted(): void
     {
-        static::created(function ($student) {
-            $student->uuid = Str::orderedUuid();
-            $student->save();
+        static::created(function ($fn) {
+            $fn->uuid = Str::orderedUuid();
+            $fn->save();
         });
+    }
+
+    public function latestTransaction()
+    {
+        return $this->hasOne(Transaction::class)->latest();
     }
 
 

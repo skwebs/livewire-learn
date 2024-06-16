@@ -20,9 +20,11 @@ class TransactionFactory extends Factory
         $customer = Customer::inRandomOrder()->first();
 
         return [
+            'uuid' => fake()->uuid(),
             'customer_uuid' => $customer->uuid,
             'amount' => $this->faker->randomFloat(2, 10, 1000), // Random amount between 10 and 1000
-            'type' => $this->faker->randomElement(['give', 'take']),
+            'type' => $this->faker->randomElement(['debit', 'credit']),
+            'date' => $this->faker->date(),
             'created_at' => $this->faker->dateTimeThisYear, // Random date within the current year
         ];
     }

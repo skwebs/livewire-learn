@@ -4,6 +4,7 @@ namespace App\Livewire\Customers;
 
 use App\Models\Customer;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class CustomersList extends Component
@@ -15,7 +16,7 @@ class CustomersList extends Component
     public function openCustomerModal()
     {
 
-        $this->isOpen = !$this->isOpen;
+        $this->isOpen = true;
     }
     // #[On('close-customer-modal')]
     #[On('modal-close')]
@@ -29,11 +30,27 @@ class CustomersList extends Component
         $this->customers = Customer::orderBy('id', 'desc')->get();
     }
 
+    #[Title('Customers List')]
     #[On('render-customer-list')]
     public function render()
     {
         $this->customers = Customer::orderBy('id', 'desc')->get();
         return view('livewire.customers.customers-list');
+    }
+
+
+    public function loadCustomers()
+    {
+        $this->customers = Customer::with(['transactions' => function ($query) {
+            $query->select('id', 'customer_uuid', 'amount', 'type', 'created_at');
+        }])
+            ->get()
+            ->map(function ($customer) {
+                $customer->balance = $customer->transactions->reduce(function ($carry, $transaction) {
+                    return $carry + ($transaction->type === 'give' ? $transaction->amount : -$transaction->amount);
+                }, 0);
+                return $customer;
+            });
     }
 
     public function create()

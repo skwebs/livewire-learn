@@ -2,9 +2,36 @@
 
     <div class="mx-auto w-96 bg-gray-50">
         <div class="bg-white h-dvh flex flex-col">
-            <div class="bg-blue-600 px-3 py-1 text-white">
-                <h1 class="text-center font-bold text-2xl ">Customer Details</h1>
+
+            {{--  --}}
+            <div class="bg-white  flex flex-col">
+                {{-- <div class="bg-blue-600 px-3 py-1 text-white">
+                    <h1 class="text-center font-bold text-2xl ">Customer Details</h1>
+                </div> --}}
+
+                <div class="bg-blue-800 text-white flex justify-between">
+
+                    <a class="h-14 flex justify-center items-center aspect-square bg-transparent hover:bg-white/10 text-center "
+                        href="{{ route('customers.txn', $customer->uuid) }}" wire:navigate>
+                        <x-icons.left-arrow />
+                    </a>
+
+                    <div class="py-2 text-xl flex items-center">
+                        Customer Details
+                    </div>
+                    <div>
+                        <span class="hidden">The parent dive is only for complete third div</span>
+                    </div>
+
+
+                </div>
+
             </div>
+            {{-- <div class="bg-blue-600 px-3 py-1 text-white">
+                <h1 class="text-center font-bold text-2xl ">Customer Details</h1>
+            </div> --}}
+
+
 
             <div class="p-4">
                 <table class="border-2">
@@ -28,8 +55,10 @@
             </div>
 
             <a class="text-center py-2 px-3 bg-gray-600 rounded-lg hover:bg-gray-700 w-fit mx-auto text-white"
-                href="{{ route('customers.list') }}" wire:navigate>Go Back</a>
+                href="{{ route('customers.txn', $customer->uuid) }}" wire:navigate>Go Back</a>
         </div>
     </div>
 
 </div>
+
+{{-- {{ url()->previous() }} --}}

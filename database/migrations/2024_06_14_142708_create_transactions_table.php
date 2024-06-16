@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique()->nullable();
             $table->uuid('customer_uuid');
             $table->decimal('amount', 8, 2);
             $table->string('type');
+            $table->date('date');
             $table->timestamps();
 
             $table->foreign('customer_uuid')->references('uuid')->on('customers')->onDelete('cascade');
